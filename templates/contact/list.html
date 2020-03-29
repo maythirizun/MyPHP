@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<section id="content">
+    <div id="content-main">
+        <div id="toolbar">
+            <input tabindex="1" size="18" id="name" name="name" type="text" value="" class="input-xlarge" placeholder="Name">
+            <input tabindex="2" size="25" id="email" name="email" type="text" value="" class="input-xlarge" placeholder="Email Address">
+            <input tabindex="2" size="25" id="email" name="address" type="text" value="" class="input-xlarge" placeholder="Address">
+            <button tabindex="3" type="submit" class="btn btn-inverse">Search</button>
+        </div>
+    </div>
+</section>
+<section class="results">
+    <table id="result_list">
+        <thead>
+            <tr>
+                <th>No</th>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Phone</th>
+                <th>Type</th>
+                <th>Teams</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for user in list %}
+            <tr>
+                {% if user.id in teams%}
+                    <td>{{user.id}}</td>
+                    <td><a href="{% url 'update' user.id %}">{{user.name}}</a></td>
+                    <td>{{user.email}}</td>
+                    <td>{{user.phone}}</td>
+                    <td>{{user.user_type}}</td>
+                    <td>team</td>
+                {% else %}
+                    <td>{{forloop.counter}}</td>
+                    <td><a href="{% url 'update' user.id %}">{{user.name}}</a></td>
+                    <td>{{user.email}}</td>
+                    <td>{{user.phone}}</td>
+                    <td>{{user.user_type}}</td>
+                    <td>----</td>
+                {% endif %}              
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</section>
+{% endblock content %}

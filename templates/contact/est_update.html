@@ -1,0 +1,81 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load widget_tweaks %}
+{% block content %}
+
+  <h2>見積り一覧</h2>
+  <form method="post" action="{% url 'upd' pk %}">
+    {% csrf_token %}
+
+    {% for hidden in form.hidden_fields %}
+      {{ hidden }}
+    {% endfor %}
+
+    <div class="form-group">
+        <div class="form-control">
+            <label for="{{ form.request_no.id_for_label }}">{{ form.request_no.label }}</label>
+            {% render_field form.request_no %}
+            {% for error in form.request_no.errors %}
+                <span class="help-block">{{ error }}</span>
+            {% endfor %}
+        </div>
+        <div class="form-control">
+            <label for="{{ form.name.id_for_label }}">{{ form.name.label }}</label>
+            {% render_field form.name %}
+            {% for error in form.name.errors %}
+                <span class="help-block">{{ error }}</span>
+            {% endfor %}
+        </div>
+        <div class="form-control">
+            <label for="{{ form.message.id_for_label }}">{{ form.message.label }}</label>
+            {% render_field form.message %}
+            {% for error in form.message.errors %}
+                <span class="help-block">{{ error }}</span>
+            {% endfor %}
+        </div>
+        <div class="form-control">
+            <label for="{{ form.update_date.id_for_label }}">{{ form.update_date.label }}</label>
+            {% render_field form.update_date %}
+            {% for error in form.update_date.errors %}
+                <span class="help-block">{{ error }}</span>
+            {% endfor %}
+        </div>
+        <table class="table table-striped table-responsive-md btn-table">
+            <thead>
+                <th>No</th>
+                <th>サービス</th>
+                <th>部門</th>
+            </thead>
+            {% if service %}
+            <tbody>
+                {% for s in service %}
+                <tr>
+                    <td>{{forloop.counter}}</td>
+                    <td>
+                        <label for="{{s.id}}">
+                        <input type="checkbox" name="sv_check" id="{{s.id}}" value="{{s.id}}" />{{s.name}}
+                        </label> 
+                    </td>
+                    <td>{{s.department}}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+            {% endif %}
+        </table>
+    </div>
+
+    <div class="form-group">
+      <input type="submit" class="btn btn-success glyphicon glyphicon-ok" name="copy" value="コピー" />
+
+      <input type="submit" class="btn btn-success glyphicon glyphicon-ok" name="update" value="更新" />
+
+      <input type="submit" class="btn btn-success glyphicon glyphicon-ok" name="delete" value="削除" />
+    </div>
+  </form>
+
+<script>
+    function copy_func(pk) {
+
+    }
+</script>
+{% endblock content %}
